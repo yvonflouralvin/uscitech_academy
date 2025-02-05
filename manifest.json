@@ -1,0 +1,18 @@
+{
+    "name":"Academy Manager",
+    "description": "Academy Manager Dashboard",
+    "version": "1.0.1",
+    "depends":[ 
+    ],
+    "restrict-tenant": [
+        "saas_uscitech_ac_cd",
+        "isp_saas_cd"
+    ],
+    "roles":[
+        {
+            "id": "uscitech_manager.view_faculties",
+            "name": "Consulter la liste des facultés",
+            "description": "L'utilisateur peut consulter la liste des facultés."
+        }
+    ]
+}

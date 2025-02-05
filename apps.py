@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class EstateConfig(AppConfig):
+class QuizItemsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'estate'
+    name = 'uscitech_academy'
