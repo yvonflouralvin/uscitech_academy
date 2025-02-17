@@ -8,7 +8,7 @@ const config: AppConfig = {
     permissions: [
         "uscitech_manager.view_faculties"
     ],
-    menu: (props: PageProps) => {
+    menu: async (props: PageProps) => {
         return [
             {
                 label: "Administrations",
@@ -31,6 +31,10 @@ const config: AppConfig = {
                     {
                         label: "Etudiants",
                         link: "/apps/uscitech_academy/students"
+                    },
+                    {
+                        label: "Professeurs",
+                        link: "/apps/uscitech_academy/teachers"
                     }
                 ]
             }
@@ -63,6 +67,41 @@ const config: AppConfig = {
                 dashboardLayouting: true,
                 render: () => {
                     return pages.StudentPage(props)
+                }
+            }
+        else if (props.params.app.length === 4 && props.params.app[2] === "students" && props.params.app[3] !== "create")
+            return {
+                dashboardLayouting: true,
+                render: () => {
+                    return pages.StudentFormPage({...props, for:"detail"})
+                }
+            }
+        else if (props.params.app.length === 4 && props.params.app[2] === "students" && props.params.app[3] === "create")
+            return {
+                dashboardLayouting: true,
+                render: () => {
+                    return pages.StudentFormPage({...props, for:"create"})
+                }
+            }
+        else if (props.params.app.length === 3 && props.params.app[2] === "teachers")
+            return {
+                dashboardLayouting: true,
+                render: () => {
+                    return pages.TeacherPage(props)
+                }
+            }
+        else if (props.params.app.length === 4 && props.params.app[2] === "teachers" && props.params.app[3] !== "create")
+            return {
+                dashboardLayouting: true,
+                render: () => {
+                    return pages.TeacherFormPage({...props, for:"detail"})
+                }
+            }
+        else if (props.params.app.length === 4 && props.params.app[2] === "teachers" && props.params.app[3] === "create")
+            return {
+                dashboardLayouting: true,
+                render: () => {
+                    return pages.TeacherFormPage({...props, for:"create"})
                 }
             }
         else

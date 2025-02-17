@@ -2,6 +2,7 @@ from django.db import models
 from slugify import slugify
 import uuid
 from core.models import User
+from hr.models import Employee
 
 
 # Create your models here.
@@ -26,7 +27,10 @@ class Promotion(models.Model):
 
 class Student(models.Model):
     
-    id = id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name="student_user")  # Ajout de la relation avec User
-    promotion = models.ForeignKey(Promotion, related_name='student_promotion', on_delete=models.CASCADE, null=True, blank=True) 
-    
+    promotion = models.ForeignKey(Promotion, related_name='student_promotion', on_delete=models.CASCADE, null=True, blank=True)
+
+class Teacher(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    employee = models.ForeignKey(Employee, related_name='teacher_employee', on_delete=models.CASCADE)
