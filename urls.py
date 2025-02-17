@@ -7,6 +7,11 @@ router = DefaultRouter()
 
 router.register('gradesections', GradeSectionViewSet)
 router.register('gradeclasses', GradeClasseViewSet)
+router.register('students', StudentViewSet)
+router.register('promotions', PromotionViewSet)
+router.register('teachers', TeacherViewSet)
+
+
 
 urlpatterns = [
     path('',include(router.urls))

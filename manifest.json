@@ -6,12 +6,23 @@
     ],
     "restrict-tenant": [
         "saas_uscitech_ac_cd",
-        "isp_saas_cd"
+        "isp_saas_cd",
+        "ispdev_saas_cd"
     ],
     "roles":[
         {
             "id": "uscitech_manager.view_faculties",
             "name": "Consulter la liste des facultés",
+            "description": "L'utilisateur peut consulter la liste des facultés."
+        },
+        {
+            "id": "academy_is_teacher",
+            "name": "L'utilisateur est un professeur",
+            "description": "L'utilisateur peut consulter la liste des facultés."
+        },
+        {
+            "id": "academy_is_student",
+            "name": "L'utilisateur est un étudiant",
             "description": "L'utilisateur peut consulter la liste des facultés."
         }
     ]
