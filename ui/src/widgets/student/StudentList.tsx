@@ -7,6 +7,7 @@ import Link from 'next/link';
 import api from '@/lib/network/api';
 import cookies from '@/lib/shared/cookies';
 import useEvent from '@/lib/hooks/useEvent';
+import { Student } from '../../types';
 
 // export default function StudentList() {
 //     const {
@@ -117,13 +118,13 @@ export default function StudentList () {
     <div>
         <div className="flex gap-[2px] px-[20px] py-[10px] bg-[rgba(0,0,0,0.03)] font-light  my-[3px] rounded ">
             <p className="w-[50%]">Nom complet</p>
-            <p className="w-[25%]">Téléphone</p>
+            <p className="w-[25%]">Classe</p>
         </div>
         {
-            results.map((item, index) => {
+            results.map((item: Student, index) => {
                 return <Link href={`/apps/uscitech_academy/students/${item.id}`} key={item.id} className="duration-300 flex gap-[2px] text-[13px] text-gray-500 px-[20px] py-[6px] my-[3px] cursor-pointer hover:bg-[rgba(0,0,0,0.02)] border-b border-inherent">
                     <p className="w-[50%]">{item.user?.name} {item.user?.last_name}</p>
-                    <p className="w-[25%]">{item.user?.email}</p>
+                    <p className="w-[25%]">{item.promotion.libelle} {item.promotion.grade.libelle}</p>
                 </Link>
             })
         }
