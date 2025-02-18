@@ -6,6 +6,7 @@ from django.contrib.auth.hashers import make_password
 from hr.serializers import EmployeeSerializer
 from hr.models import Employee
 from django.contrib.auth.models import  Permission
+import os
 
 
 class GradeSectionSerializer(serializers.ModelSerializer):
@@ -59,7 +60,7 @@ class StudentSerializer(serializers.ModelSerializer):
             username = email,
             phone = phone if phone != "" else None,
             email = email,
-            password = make_password("DefaultPass123")
+            password = make_password(os.environ.get("DEFAULT_PASS", "1234"))
         )
 
         permission = Permission.objects.get(codename="isp_user_student")

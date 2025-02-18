@@ -13,28 +13,45 @@ const config: AppConfig = {
             {
                 label: "Administrations",
                 permissions: [
-                    "uscitech_manager.view_faculties"
+                    "uscitech_manager.view_faculties",
+                    "isp_departement_officier"
                 ],
                 subItems: [
                     {
                         label: "Sections",
-                        link: "/apps/uscitech_academy/sections"
+                        link: "/apps/uscitech_academy/sections",
+                        permissions: [
+                            "uscitech_manager.view_faculties",
+                        ]
                     },
                     {
                         label: "Départements",
-                        link: "/apps/uscitech_academy/departements"
+                        link: "/apps/uscitech_academy/departements",
+                        permissions: [
+                            "uscitech_manager.view_faculties",
+                        ]
                     },
                     {
                         label: "Promotions",
-                        link: "/apps/uscitech_academy/promotions"
+                        link: "/apps/uscitech_academy/promotions",
+                        permissions: [
+                            "uscitech_manager.view_faculties",
+                        ]
                     },
                     {
                         label: "Etudiants",
-                        link: "/apps/uscitech_academy/students"
+                        link: "/apps/uscitech_academy/students",
+                        permissions: [
+                            "uscitech_manager.view_faculties",
+                            "isp_departement_officier"
+                        ]
                     },
                     {
                         label: "Professeurs",
-                        link: "/apps/uscitech_academy/teachers"
+                        link: "/apps/uscitech_academy/teachers",
+                        permissions: [
+                            "uscitech_manager.view_faculties",
+                        ]
                     }
                 ]
             }
