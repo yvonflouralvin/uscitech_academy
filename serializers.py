@@ -62,9 +62,17 @@ class StudentSerializer(serializers.ModelSerializer):
             email = email,
             password = make_password(os.environ.get("DEFAULT_PASS", "1234"))
         )
+        try:
+            permission = Permission.objects.get(codename="isp_user_student")
+            user.user_permissions.add(permission)
+        except: 
+            pass
+        try:
+            permission = Permission.objects.get(codename="academy_is_student")
+            user.user_permissions.add(permission)
+        except:
+            pass
 
-        permission = Permission.objects.get(codename="isp_user_student")
-        user.user_permissions.add(permission)
         user.save()
 
         # Création de l'employé avec l'utilisateur nouvellement créé
