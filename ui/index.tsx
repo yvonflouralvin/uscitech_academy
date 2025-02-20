@@ -6,15 +6,15 @@ const config: AppConfig = {
     icon: "https://www.flaticon.com/svg/static/icons/svg/2933/2933715.svg",
     dashboardLayouting: true,
     permissions: [
-        "uscitech_manager.view_faculties"
+        "uscitech_manager.view_faculties",
+        "isp_departement_officier"
     ],
     menu: async (props: PageProps) => {
         return [
             {
                 label: "Administrations",
                 permissions: [
-                    "uscitech_manager.view_faculties",
-                    "isp_departement_officier"
+                    "uscitech_manager.view_faculties" 
                 ],
                 subItems: [
                     {
@@ -42,8 +42,7 @@ const config: AppConfig = {
                         label: "Etudiants",
                         link: "/apps/uscitech_academy/students",
                         permissions: [
-                            "uscitech_manager.view_faculties",
-                            "isp_departement_officier"
+                            "uscitech_manager.view_faculties" 
                         ]
                     },
                     {

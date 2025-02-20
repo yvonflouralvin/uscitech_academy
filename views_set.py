@@ -11,15 +11,24 @@ import pandas as pd
 from rest_framework.parsers import MultiPartParser, FormParser 
 from rest_framework import status
 
+from django.contrib.auth.hashers import make_password
+import os
+
 from core.utils import Paginator
 
 class GradeSectionViewSet(viewsets.ModelViewSet):
     queryset = GradeSection.objects.all()
     serializer_class = GradeSectionSerializer
+    pagination_class = Paginator
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    search_fields = ["libelle"]
 
 class GradeClasseViewSet(viewsets.ModelViewSet):
     queryset = GradeClasse.objects.all()
     serializer_class = GradeClasseSerializer
+    pagination_class = Paginator
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    search_fields = ["libelle", "grade__libelle"]
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
@@ -49,16 +58,39 @@ class StudentViewSet(viewsets.ModelViewSet):
             
             for _, row in df.iterrows():
                 # full_name = f"{row['first_name']} {row['name']} {row['last_name']}".strip()
-                user, created = User.objects.get_or_create(
+                user, created_user = User.objects.get_or_create(
                     username=row['email'],
                     defaults={
                         'name': row['name'],
                         'first_name': row['first_name'],
                         'last_name': row['last_name'],
                         'phone': row.get('phone', ''),
-                        'sexe': 'm'  # Valeur par défaut, peut être ajustée si disponible
+                        'sexe': 'm',  # Valeur par défaut, peut être ajustée si disponible,
+                        "password" : make_password(os.environ.get("DEFAULT_PASS", "1234")),
+                        "is_active" : True,
+                        "email" : row['email']
                     }
                 )
+
+                if not created_user :
+                    user.first_name = row['first_name']
+                    user.last_name = row['last_name']
+                    user.name = row['name']
+                    user.email = row['email']
+                    user.is_active=True
+
+                    user.save()
+                
+                try:
+                    permission = Permission.objects.get(codename="isp_user_student")
+                    user.user_permissions.add(permission)
+                except: 
+                    pass
+                try:
+                    permission = Permission.objects.get(codename="academy_is_student")
+                    user.user_permissions.add(permission)
+                except:
+                    pass
                 
                 promotion = None
                 
@@ -83,6 +115,8 @@ class PromotionViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ["libelle", "grade__libelle"]
 
+    
+
 
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
@@ -90,3 +124,17 @@ class TeacherViewSet(viewsets.ModelViewSet):
     pagination_class = Paginator
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ["employee__fullname", "employee__user__name",  "employee__user__last_name",  "employee__user__first_name",  "employee__user__phone",  "employee__user__email"]
+
+    def destroy(self, request, *args, **kwargs):
+        """Retirer la permission 'academy_is_teacher' lors de la suppression d'un Teacher"""
+        instance = self.get_object()  # Récupère l'instance à supprimer
+        user = instance.employee.user  # Assumant que Employee a une relation OneToOne avec User
+
+        # Vérifier si la permission existe et retirer la permission de l'utilisateur
+        try:
+            permission = Permission.objects.get(codename="academy_is_teacher")
+            user.user_permissions.remove(permission)
+        except Permission.DoesNotExist:
+            pass  # Si la permission n'existe pas, on ne fait rien
+
+        return super().destroy(request, *args, **kwargs)

@@ -37,12 +37,12 @@ export default function TeacherForm(props: TeacherFormProps) {
 
     const save = async () => {
         if (isSaving === true) return;
-        try { 
+        try {
 
             setIsSaving(true)
-            const datas: any = { 
+            const datas: any = {
             }
- 
+
             if (selectedEmployee !== undefined && selectedEmployee !== null) datas['employee_id'] = selectedEmployee;
 
 
@@ -77,7 +77,15 @@ export default function TeacherForm(props: TeacherFormProps) {
                 </div>
                 <div className="mt-[10px]"></div>
                 <div className="mt-[15px]">
-                    <SearchSelected defaultValue={ props.teacher ? `${props.teacher?.employee.user.name} ${props.teacher?.employee.user.last_name} ${props.teacher?.employee.user.first_name}` : ""} onChange={(e: Teacher) => setSelectedEmployee(e.id)} label='Enseignant' render={(e: any) => (`${e.user?.name} ${e.user?.last_name} ${e.user?.first_name}`)} index='id' url='/hr/employees/' />
+                    {
+                        props.teacher === undefined ?
+                            <SearchSelected onChange={(e: Teacher) => setSelectedEmployee(e.id)} label='Enseignant' render={(e: any) => (`${e.user?.name} ${e.user?.last_name} ${e.user?.first_name}`)} index='id' url='/hr/employees/' />
+                            :
+                            <div className='border-b border-inherent'>
+                                <p className='text-gray-400 text-[13px]'>Enseignant</p>
+                                <p className='text-[13px]'>{`${props.teacher?.employee.user.name} ${props.teacher?.employee.user.last_name} ${props.teacher?.employee.user.first_name}`}</p>
+                            </div>
+                    }
                 </div>
             </div>
         </div>

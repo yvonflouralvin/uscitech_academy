@@ -31,6 +31,11 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name="student_user")  # Ajout de la relation avec User
     promotion = models.ForeignKey(Promotion, related_name='student_promotion', on_delete=models.CASCADE, null=True, blank=True)
 
+    def delete(self, *args, **kwargs):
+        # Supprimer l'utilisateur associé avant de supprimer l'employé
+        self.user.delete()
+        super().delete(*args, **kwargs)
+
 class Teacher(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     employee = models.ForeignKey(Employee, related_name='teacher_employee', on_delete=models.CASCADE)

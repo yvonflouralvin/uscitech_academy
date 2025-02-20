@@ -3,15 +3,15 @@ import { PageProps } from "@/lib/shared/types/config";
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import Link from "next/link";
 import { PlusIcon, UploadCloudIcon } from "lucide-react";
-import StudentList from "../../widgets/student/StudentList";
+import StudentList from "./StudentList";
 import StudentUploadLists from "./StudentUploadLists";
 
-export default function StudentPage(props: PageProps){
-    // return <div className="bg-white rounded-xl p-[20px]">
-    //     {/* <StudentList /> */}
-    // </div>
+interface Props extends PageProps {
+    
+}
+export default function StudentPage(props: Props){
 
-    return <div className='flex w-full h-full flex-col bg-white rounded shadow p-[20px]'>
+    return <div className='flex w-full h-full flex-col bg-white rounded shadow p-[5px] md:p-[20px]'>
         <Breadcrumb links={[
             {
                 label: "Academie"
@@ -36,7 +36,7 @@ export default function StudentPage(props: PageProps){
                 </div>
             </div>
             <div className="mt-[10px]">
-                <StudentList />
+                <StudentList   />
             </div>
         </div>
 

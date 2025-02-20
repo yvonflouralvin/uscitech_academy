@@ -2,7 +2,7 @@ import { PageProps } from '@/lib/shared/types/config'
 import api from '@/lib/network/api'
 import { cookies } from 'next/headers'
 import { StudentFormPageProps, TeacherFormPageProps } from '../../types'
-import StudentForm from '../../widgets/student/StudentForm'
+import StudentForm from '../student/StudentForm'
 import TeacherForm from '../../widgets/teacher/TeacherForm'
 
 
@@ -11,7 +11,7 @@ export default async function TeacherFormPage(props: TeacherFormPageProps) {
     if(props.for === "detail")
         try {
             const student = await api(await cookies()).get(`/uscitech_academy/teachers/${id}/`)
-            return <div className='flex w-full h-full flex-col bg-white rounded shadow p-[20px]'>
+            return <div className='flex w-full h-full flex-col bg-white rounded shadow p-[5px] md:p-[20px]'>
                 <TeacherForm {...props} teacher={student.data} />
             </div>
         } catch (e) {
@@ -20,7 +20,7 @@ export default async function TeacherFormPage(props: TeacherFormPageProps) {
         }
     else
         try { 
-            return <div className='flex w-full h-full flex-col bg-white rounded shadow p-[20px]'>
+            return <div className='flex w-full h-full flex-col bg-white rounded shadow p-[5px] md:p-[20px]'>
                 <TeacherForm {...props} />
             </div>
         } catch (e) {
