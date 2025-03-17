@@ -55,7 +55,8 @@ export default function PromotionFormCS(props: Props) {
                         id: `id`,
                         render: (e: Grade) => `${e.libelle}`,
                         selectedFirstDefault: false,
-                        label:"Département"
+                        label:"Département",
+                        defaultValue: (e: Grade)=> e.id
                     },
                     defaultValue: (e: Promotion)=> {
                         return e.grade.libelle
