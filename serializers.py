@@ -25,9 +25,17 @@ class GradeClasseSerializer(serializers.ModelSerializer):
 
 class PromotionSerializer(serializers.ModelSerializer):
     grade = GradeClasseSerializer(read_only=True)  # On inclut le grade comme un nested serializer
+    grade_id = serializers.PrimaryKeyRelatedField(
+        queryset=GradeClasse.objects.all(), source="grade", allow_null=False, required=True, write_only=True
+    )
+    student_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Promotion
-        fields = ['id', 'libelle', 'grade']
+        fields = ['id', 'libelle', 'grade', 'option', 'student_count', 'grade_id']
+
+    def get_student_count(self, obj):
+        return obj.student_promotion.count()
 
 
 class StudentSerializer(serializers.ModelSerializer):

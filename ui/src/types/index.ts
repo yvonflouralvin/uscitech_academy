@@ -14,6 +14,8 @@ export interface Promotion {
     id: string
     libelle: string
     grade: Grade
+    option?: string
+    student_count: number
 }
 export interface Student {
     id: string,

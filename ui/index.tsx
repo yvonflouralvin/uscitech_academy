@@ -1,5 +1,6 @@
 import { AppConfig, PageProps } from '@/lib/shared/types/config';
 import pages from './src/pages';
+import promotions from './src/pages/promotions';
 const config: AppConfig = {
     label: "Etudiants",
     showInMainMenu: true,
@@ -71,13 +72,8 @@ const config: AppConfig = {
                     return await pages.ClassesPage(props);
                 }
             }
-        else if (props.params.app.length === 3 && props.params.app[2] === "promotions")
-            return {
-                dashboardLayouting: true,
-                render: async () => {
-                    return await pages.PromotionPage(props);
-                }
-            }
+        else if (props.params.app[2] === "promotions")
+            return promotions(props)
         else if (props.params.app.length === 3 && props.params.app[2] === "students")
             return {
                 dashboardLayouting: true,
