@@ -14,7 +14,6 @@ interface Props extends PageProps {
 export default function PromotionFormCS(props: Props) {
     return (
         <FormView
-
             {...props}
             breadcrumb={[
                 {label: "Administration"},
@@ -56,7 +55,7 @@ export default function PromotionFormCS(props: Props) {
                         render: (e: Grade) => `${e.libelle}`,
                         selectedFirstDefault: false,
                         label:"Département",
-                        defaultValue: (e: Grade)=> e.id
+                        defaultValue: (e: Promotion)=> e.grade.id
                     },
                     defaultValue: (e: Promotion)=> {
                         return e.grade.libelle
