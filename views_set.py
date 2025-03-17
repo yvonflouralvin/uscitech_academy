@@ -109,7 +109,7 @@ class StudentViewSet(viewsets.ModelViewSet):
     
 
 class PromotionViewSet(viewsets.ModelViewSet):
-    queryset = Promotion.objects.all()
+    queryset = Promotion.objects.all().order_by('libelle')
     serializer_class = PromotionSerializer
     pagination_class = Paginator
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]

@@ -15,6 +15,7 @@ export default function PromotionsList(props: Props){
         // params: [props.section.id],
         columns:[
             {label:"Promotion", index:"libelle"},
+            {label:"Option", index:"option"},
             {
                 label:"Faculté", index:"grade_id", type:"relation", relation:{idIndex:"id", model:"uscitech_academy_gradeclasse", depth:2,  
                 render: (e)=> <p>{e.libelle} - {e.uscitech_academy_gradesection?.libelle}</p>}, 
