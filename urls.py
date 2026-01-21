@@ -10,8 +10,7 @@ router.register('gradeclasses', GradeClasseViewSet)
 router.register('students', StudentViewSet)
 router.register('promotions', PromotionViewSet)
 router.register('teachers', TeacherViewSet)
-
-
+router.register('academicyear', AcademicYearViewSet)
 
 urlpatterns = [
     path('',include(router.urls))

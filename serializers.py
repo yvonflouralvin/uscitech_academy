@@ -32,7 +32,7 @@ class PromotionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Promotion
-        fields = ['id', 'libelle', 'grade', 'option', 'student_count', 'grade_id']
+        fields = ['id', 'libelle', 'grade', 'option', 'student_count', 'grade_id', 'academicyear']
 
     def get_student_count(self, obj):
         return obj.student_promotion.count()
@@ -144,3 +144,9 @@ class TeacherSerializer(serializers.ModelSerializer):
         permission = Permission.objects.get(codename="academy_is_teacher")
         teacher.employee.user.user_permissions.add(permission)
         return teacher
+
+class AcademicYearSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AcademicYear
+        fields = ['id', 'name']  # Vous pouvez ajuster les champs selon vos besoins
+

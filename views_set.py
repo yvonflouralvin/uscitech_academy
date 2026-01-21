@@ -138,3 +138,10 @@ class TeacherViewSet(viewsets.ModelViewSet):
             pass  # Si la permission n'existe pas, on ne fait rien
 
         return super().destroy(request, *args, **kwargs)
+
+class AcademicYearViewSet(viewsets.ModelViewSet):
+    queryset = AcademicYear.objects.all()
+    serializer_class = AcademicYearSerializer
+    pagination_class = Paginator
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    search_fields = ["name"]

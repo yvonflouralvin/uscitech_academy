@@ -23,7 +23,7 @@ export default function PromotionFormCS(props: Props) {
             postURL="/uscitech_academy/promotions/"
             putURL="/uscitech_academy/promotions/"
             deleteURL="/uscitech_academy/promotions/"
-            for={props.promotion !== undefined ? "detail" : "create"}
+            // for={props.promotion !== undefined ? "detail" : "create"}
             defaultValue={props.promotion}
             fields={[
                 { 

@@ -5,11 +5,16 @@ from core.models import User
 from hr.models import Employee
 from core.models import CoreBaseModel
 
+class AcademicYear(CoreBaseModel):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(unique=True, max_length=250, null=False)
+
 # Create your models here.
 class GradeSection(CoreBaseModel):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     libelle = models.TextField(null=False)
+    
 
 
 class GradeClasse(CoreBaseModel):
@@ -25,12 +30,15 @@ class Promotion(CoreBaseModel):
     libelle = models.TextField(null=False)
     grade = models.ForeignKey(GradeClasse, null=False, on_delete=models.CASCADE)
     option = models.TextField(null=True, blank=True)
+    academicyear = models.ForeignKey(AcademicYear, on_delete=models.CASCADE, null=True, blank=True)
+
 
 class Student(CoreBaseModel):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name="student_user")  # Ajout de la relation avec User
     promotion = models.ForeignKey(Promotion, related_name='student_promotion', on_delete=models.CASCADE, null=True, blank=True)
+    academicyear = models.ForeignKey(AcademicYear, on_delete=models.CASCADE, null=True, blank=True)
 
     def delete(self, *args, **kwargs):
         # Supprimer l'utilisateur associé avant de supprimer l'employé

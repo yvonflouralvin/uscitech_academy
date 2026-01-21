@@ -7,6 +7,7 @@ import { StudentFormPageProps, TeacherFormPageProps } from "../types";
 import StudentFormPage from "./student/StudentFormPage";
 import TeacherPage from "./teacher/TeacherPage";
 import TeacherFormPage from "./teacher/TeacherFormPage";
+import AcademicYearPage from "../AcademicYearPage";
 
 
 export default {
@@ -16,5 +17,6 @@ export default {
     PromotionPage: (props: PageProps) => PromotionsPage(props),
     StudentFormPage : (props: StudentFormPageProps) => StudentFormPage(props),
     TeacherPage: (props: PageProps) => TeacherPage(props),
-    TeacherFormPage : (props: TeacherFormPageProps)=> TeacherFormPage(props)
+    TeacherFormPage : (props: TeacherFormPageProps)=> TeacherFormPage(props),
+    AcademicYear: (props: PageProps)=> AcademicYearPage(props)
 }
