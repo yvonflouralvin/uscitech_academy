@@ -10,6 +10,7 @@ const config: AppConfig = {
         "uscitech_manager.view_faculties",
         "isp_departement_officier"
     ],
+    is_superuser: true,
     menu: async (props: PageProps) => {
         return [
             {
@@ -17,47 +18,61 @@ const config: AppConfig = {
                 permissions: [
                     "uscitech_manager.view_faculties" 
                 ],
+                is_superuser: true,
                 subItems: [
                     {
                         label: "Sections",
                         link: "/apps/uscitech_academy/sections",
                         permissions: [
                             "uscitech_manager.view_faculties",
-                        ]
+                        ],
+                        is_superuser: true,
                     },
                     {
                         label: "Départements",
                         link: "/apps/uscitech_academy/departements",
                         permissions: [
                             "uscitech_manager.view_faculties",
-                        ]
+                        ],
+                        is_superuser: true,
                     },
                     {
                         label: "Promotions",
                         link: "/apps/uscitech_academy/promotions",
                         permissions: [
                             "uscitech_manager.view_faculties",
-                        ]
+                        ],
+                        is_superuser: true,
                     },
                     {
                         label: "Etudiants",
                         link: "/apps/uscitech_academy/students",
                         permissions: [
                             "uscitech_manager.view_faculties" 
-                        ]
+                        ],
+                        is_superuser: true,
                     },
                     {
                         label: "Professeurs",
                         link: "/apps/uscitech_academy/teachers",
                         permissions: [
                             "uscitech_manager.view_faculties",
-                        ]
+                        ],
+                        is_superuser: true,
+                    },
+                    {
+                        label: "Annee Academique",
+                        link: "/apps/uscitech_academy/academic-year",
+                        permissions: [
+                            "uscitech_manager.view_faculties",
+                        ],
+                        is_superuser: true,
                     }
                 ]
             }
         ]
     },
-    page: (props: PageProps) => {
+    page: async (props: PageProps) => {
         if (props.params.app.length === 3 && props.params.app[2] === "sections")
             return {
                 dashboardLayouting: true,
@@ -65,6 +80,14 @@ const config: AppConfig = {
                     return pages.GradesPage(props);
                 }
             }
+        else if(props.params.app.length === 3 && props.params.app[2] === "academic-year") {
+            return {
+                dashboardLayouting: true,
+                render: () => {
+                    return pages.AcademicYear(props);
+                }
+            }
+        }
         else if (props.params.app.length === 3 && props.params.app[2] === "departements")
             return {
                 dashboardLayouting: true,
