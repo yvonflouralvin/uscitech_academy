@@ -32,7 +32,7 @@ class PromotionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Promotion
-        fields = ['id', 'libelle', 'grade', 'option', 'student_count', 'grade_id', 'academicyear']
+        fields = ['id', 'libelle', 'grade', 'option', 'student_count', 'grade_id', 'academicyear', 'correspondance_isp']
 
     def get_student_count(self, obj):
         return obj.student_promotion.count()
@@ -48,16 +48,18 @@ class StudentSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(write_only=True, required=False)
     fullname = serializers.CharField(required=True, write_only=True)
     email = serializers.CharField(write_only=True, required=True)
+    matricule = serializers.CharField(write_only=True, required=False)
 
 
     class Meta:
         model = Student
-        fields = ['id', 'promotion', 'user', "phone", "fullname", "email", "promotion_id"]
+        fields = ['id', 'promotion', 'user', "phone", "fullname", "email", "promotion_id", "matricule"]
 
     def create(self, validated_data):
         fullname = validated_data.pop("fullname", None) 
         email = validated_data.pop("email", None)
         phone = validated_data.pop("phone", None)
+        matricule = validated_data.pop("matricule", None)
 
         fullname_splited = str(fullname).split(" ")
         # Création d'un utilisateur s'il n'est pas fourni
@@ -68,7 +70,8 @@ class StudentSerializer(serializers.ModelSerializer):
             username = email,
             phone = phone if phone != "" else None,
             email = email,
-            password = make_password(os.environ.get("DEFAULT_PASS", "1234"))
+            password = make_password(os.environ.get("DEFAULT_PASS", "1234")),
+            matricule = matricule
         )
         try:
             permission = Permission.objects.get(codename="isp_user_student")

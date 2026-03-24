@@ -31,6 +31,7 @@ class Promotion(CoreBaseModel):
     grade = models.ForeignKey(GradeClasse, null=False, on_delete=models.CASCADE)
     option = models.TextField(null=True, blank=True)
     academicyear = models.ForeignKey(AcademicYear, on_delete=models.CASCADE, null=True, blank=True)
+    correspondance_isp = models.CharField(max_length=250, null=True, blank=True)
 
 
 class Student(CoreBaseModel):
@@ -39,6 +40,7 @@ class Student(CoreBaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name="student_user")  # Ajout de la relation avec User
     promotion = models.ForeignKey(Promotion, related_name='student_promotion', on_delete=models.CASCADE, null=True, blank=True)
     academicyear = models.ForeignKey(AcademicYear, on_delete=models.CASCADE, null=True, blank=True)
+    matricule = models.CharField(max_length=250, null=True, blank=True, default="")
 
     def delete(self, *args, **kwargs):
         # Supprimer l'utilisateur associé avant de supprimer l'employé

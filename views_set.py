@@ -13,8 +13,28 @@ from rest_framework import status
 
 from django.contrib.auth.hashers import make_password
 import os
+from isp_stage.models import UserSelectedAcademicYear
 
 from core.utils import Paginator
+
+def get_current_academic_year(user):
+    user_current_academic_year = UserSelectedAcademicYear.objects.filter(user = user).first()
+    if user_current_academic_year :
+        return user_current_academic_year.academic_year.id
+    else :
+        default_academic_year = UserSelectedAcademicYear.objects.filter(id="default_academic_year").first() 
+        if default_academic_year :
+            UserSelectedAcademicYear.objects.create(
+                id = f'{user.id}',
+                user = user,
+                academic_year = default_academic_year.academic_year
+            )
+            return default_academic_year.academic_year.id
+    return None
+
+def get_academic_year(user):
+    return AcademicYear.objects.filter(id=get_current_academic_year(user)).first()
+
 
 class GradeSectionViewSet(viewsets.ModelViewSet):
     queryset = GradeSection.objects.all()
@@ -36,6 +56,15 @@ class StudentViewSet(viewsets.ModelViewSet):
     pagination_class = Paginator
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
     search_fields = ["user__username", "user__first_name", "user__last_name"]
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = super().get_queryset()
+
+        current_academicyear = get_academic_year(user)
+        if current_academicyear:
+            queryset = queryset.filter(academicyear=current_academicyear)
+        return queryset
 
     @action(detail=False, methods=['get'])
     def me(self, request):
@@ -113,7 +142,7 @@ class PromotionViewSet(viewsets.ModelViewSet):
     serializer_class = PromotionSerializer
     pagination_class = Paginator
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]
-    search_fields = ["libelle", "grade__libelle"]
+    search_fields = ["libelle", "grade__libelle", "correspondance_isp"]
 
     
 

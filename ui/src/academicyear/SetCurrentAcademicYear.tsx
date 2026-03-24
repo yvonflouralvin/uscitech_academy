@@ -21,25 +21,22 @@ export default function SetCurrentAcademicYear( props: Props) {
     const [currentAcademicYear, setCurrentAcademicYear] = React.useState<{id: string, name: string} | undefined>(undefined)
     
     React.useEffect(()=>{
-        console.log(currentAcademicYear) ;
         const exec = async ()=>{
             if(props.for === "admin") { 
                 try{
                     const result = await api(await cookies).get(`/isp_stage/isp_config/get-default-academic-year/`);
-                    console.log(result.data)
                     setCurrentAcademicYear(result.data)
                 }catch(e: any){ 
                 } 
             }else {
                 try{
                     const result = await api(await cookies).get(`/isp_stage/isp_config/user-config/001/`);
-                    console.log(result.data)
                     setCurrentAcademicYear(result.data)
                 }catch(e: any){ 
                 } 
             }
-            exec()
         }
+        exec()
     }, [])
 
     const onOpenModal = () => {
